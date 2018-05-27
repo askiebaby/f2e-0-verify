@@ -212,6 +212,7 @@ label {
     -moz-transition: ease-in-out 0.25s;
     -o-transition: ease-in-out 0.25s;
     transition: ease-in-out 0.25s;
+    outline: 0;
 }
 
 .button--submit {

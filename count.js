@@ -50,7 +50,6 @@ var I = {
             return false;
         }
         var reg = /\S+@\S+\.\S+/;
-        console.log(reg.test(v), ' ' + v);
         if (reg.test(v)) {
             I.ajax('POST', 'isSignUp', I.$('email'));
         } else {
