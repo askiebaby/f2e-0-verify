@@ -2,12 +2,16 @@
 /* base */
 
 html {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
     box-sizing: border-box;
 }
 
 *,
-*::before,
-*::after {
+*:before,
+*:after {
+    -webkit-box-sizing: inherit;
+    -moz-box-sizing: inherit;
     box-sizing: inherit;
 }
 
@@ -18,8 +22,14 @@ body {
 
 body {
     position: relative;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
     display: flex;
+    -webkit-justify-content: center;
     justify-content: center;
+    -webkit-align-items: center;
     align-items: center;
     background: rgba(59, 196, 176, 1);
     background: -moz-linear-gradient(top, rgba(59, 196, 176, 1) 0%, rgba(10, 199, 174, 1) 70%, rgba(10, 185, 191, 1) 100%);
@@ -37,6 +47,9 @@ body::before {
     width: 100%;
     height: 100%;
     background: url('images/unsplash-bg.jpg') no-repeat;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
     background-size: cover;
     opacity: 0.2;
 }
@@ -60,20 +73,29 @@ a {
 }
 
 h1,
-h2 {
-    line-height: 1.5em;
+h2,
+h3 {
+    line-height: 1.5rem;
     text-align: center;
 }
 
 h1 {
-    font-size: 2.5em;
+    font-size: 2.5rem;
     color: #fff;
     letter-spacing: 3px;
 }
 
 h2 {
-    font-size: 1.5em;
+    font-size: 1.5rem;
     color: #333;
+}
+
+h3 {
+    height: 40px;
+    margin: 0 auto;
+    color: #999;
+    font-size: 1rem;
+    font-weight: 500;
 }
 
 .verify {
@@ -83,17 +105,77 @@ h2 {
     padding: 1rem 0;
     border-radius: 3px;
     box-shadow: 5px 5px 15px #25b8a2;
+    min-height: 320px;
+}
+
+.number {
+    position: relative;
+    top: -1px;
+    color: #e9b000;
+    font-size: 1.5rem;
+    vertical-align: middle;
+    font-weight: 800;
+}
+
+.myloader {
+    display: inline-block;
+    vertical-align: middle;
+    border: 5px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 5px solid #e9b000;
+    width: 25px;
+    height: 25px;
+    -webkit-animation: spin 1s linear infinite;
+    -moz-animation: spin 2s linear infinite;
+    -o-animation: spin 2s linear infinite;
+    animation: spin 1s linear infinite;
+}
+
+/* animation */
+
+/* Safari */
+
+@-webkit-keyframes spin {
+    0% {
+        -webkit-transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@-moz-keyframes spin {
+    0% {
+        -webkit-transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@-o-keyframes spin {
+    0% {
+        -webkit-transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 /* form el */
 
 .input--block {
     width: 80%;
-    margin: 15px auto;
-}
-
-.input--block__alignRight {
-    text-align: right;
+    margin: 0 auto 15px;
 }
 
 input.email {
@@ -104,6 +186,7 @@ input.email {
     display: inline-block;
     border: 1px solid #ddd;
     outline: 0;
+    text-transform: lowercase;
 }
 
 input.email:focus {
@@ -133,6 +216,8 @@ label {
 
 .button--submit {
     padding: 0.85rem 1.5rem;
+    position: absolute;
+    right: 10%;
 }
 
 .button--submit__disable {
@@ -145,6 +230,8 @@ label {
 .button--submit__active {
     background: #14aaf5;
     color: #fff;
+    cursor: pointer;
+    border: 1px solid #14aaf5;
 }
 
 .button--submit__active:hover {
@@ -158,8 +245,17 @@ label {
 }
 
 .button--normal:hover {
-    background: #fff;
-    color: #666;
+    background: #e9b000;
+    border: 1px solid #e9b000;
+    color: #fff;
+}
+
+.msg-important {
+    line-height: 1.3rem;
+    color: #0c90d3;
+    display: inline-block;
+    font-size: 0.9rem;
+    margin-top: 5px;
 }
 
 .msg {

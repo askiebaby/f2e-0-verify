@@ -17,21 +17,31 @@
         </header>
 
         <section class="verify">
-            <h2>信箱驗證</h2>
-            <form id="" action="">
+            <h2>報名驗證</h2>
+            <h3>已有
+                <span class="number" id="total">
+                    <span class="myloader"></span>
+                </span> 位前端工程師跳坑！
+            </h3>
+            <form name="form1" action="" method="POST">
                 <div class="input--block">
                     <label for="email">EMAIL ADDRESS</label>
-                    <input type="email" id="email" class="email" autofocus required>
+                    <input type="email" id="email" class="email" placeholder="尚未填寫信箱" name="email" autofocus>
                 </div>
-                <div class="input--block input--block__alignRight">
-                    <button type="submit" class="button button--submit button--submit__disable" disabled id="verifyBtn">驗證</button>
+                <div class="input--block">
+                    <span id="msg" class="msg-important"></span>
+                    <button type="button" class="button button--submit button--submit__active" id="verifyBtn" onclick="I.submitBtn(I.$('email'));">驗證</button>
                 </div>
             </form>
         </section>
-        <section class="msg">還沒有報名嗎？
+
+        <section class="msg">
+            還沒有報名嗎？
             <a href="https://github.com/hexschool/TheF2E/" class="button button--normal" target="_blank">加入我們</a>
         </section>
     </div>
+    <script src="https://momentjs.com/downloads/moment-with-locales.js"></script>
+
 </body>
 
 </html>

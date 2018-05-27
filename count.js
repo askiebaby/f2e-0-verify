@@ -3,66 +3,61 @@ var I = {
         if (document.getElementById(x)) return document.getElementById(x);
         return false;
     },
-    addClass: function (c, o) {
-        var n = o.className;
-        if (n.indexOf(c) != -1) return;
-        if (n != '') c = ' ' + c;
-        o.className = n + c;
-    },
-    removeClass: function (c, o) {
-        var n = o.className;
-        var r = new RegExp("\\s?\\b" + c + "\\b", "g");
-        n = n.replace(r, '');
-        o.className = n;
-    },
-    J: function (o, p) {
-        var D = "";
-        var X = X = new XMLHttpRequest();;
-        if (X) {
-            X.onreadystatechange = function () {
-                try {
-                    if (X.readyState == 4 && X.status == 200) {
-                        if (p) {
-                            if (p == "pfunction") {
-                                I.pfunction();
-                                I.pfunction = null
-                            };
-                            if (p == "noticeline") {
-                                window.location.reload();
-                            } else {
-                                I.$(p).innerHTML = X.responseText;
-                                if (I.pfunction != null) {
-                                    I.pfunction();
-                                    I.pfunction = null;
-                                }
-                            };
-                            if (I.tempobj != null) {
-                                I.tempobj.innerHTML = X.responseText;
-                                setTimeout(I.hideedit, 300);
-                            };
-                        };
-                    };
-                } catch (e) {};
-            };
-            X.open("GET", o);
-            try {
-                X.send(D);
-            } catch (e) {};
+    base: 'https://www.thef2e.com/api/',
+    ajax: function (method, params, input) {
+        var base = I.base + params,
+            x = new XMLHttpRequest();
+        x.open(method, base, true);
+        x.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        x.onreadystatechange = function () {
+            if (x.readyState == 4 && x.status == 200) {
+                var data = JSON.parse(x.responseText);
+                if (method === 'POST') {
+                    I.response.post(data);
+                } else {
+                    I.response.get(data);
+                }
+            }
         };
-        return false;
+        if (method === 'POST') input = input.value;
+        x.send(encodeURI('email=' + input));
+        x.onload = function () {
+            var callbacks = JSON.parse(x.responseText);
+        };
     },
-    init: function () {
-        console.log("已執行初始化");
-        I.checkSubmitBtn('verifyBtn', 'email');
+    response: {
+        get: function (data) {
+            I.$('total').innerHTML = data.total;
+        },
+        post: function (data) {
+            var success = data.success,
+                msg = data.message,
+                name = data.nickName,
+                time = moment(data.timeStamp).format("YYYY-MM-DD HH:mm");
+
+            I.$('msg').innerHTML = (success === true) ? name + '！' + msg + '<br>(' + time + ')' : '嗚嗚，<br>' + msg + '耶！';
+            I.$('verifyBtn').innerHTML = '重新驗證';
+        }
     },
-    checkSubmitBtn: function (btn, input) {
-        // var btn, input;
-        btn = I.$(btn);
-        input = I.$(input);
-        btn.disabled = (input.value) ? 'true' : 'false';
+    init: function (e) {
+        //報名人數
+        I.ajax('GET', 'signUpTotal');
+    },
+    submitBtn: function (input) {
+        var v = I.$('email').value;
+        if (v === '') {
+            I.$('msg').innerHTML = '信箱要記得寫... ^_^';
+            return false;
+        }
+        var reg = /\S+@\S+\.\S+/;
+        console.log(reg.test(v), ' ' + v);
+        if (reg.test(v)) {
+            I.ajax('POST', 'isSignUp', I.$('email'));
+        } else {
+            I.$('msg').innerHTML = "信箱不合格式，再試試喔！";
+        }
+
     }
 }
-var init = I.init();
-(function () {
-    console.log("已執行IIFE");
-}(init));
+
+I.init();
